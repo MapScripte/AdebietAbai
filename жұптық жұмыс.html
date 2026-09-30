@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жұптық жұмыс - Сәйкестендіру</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #cbd5e1;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 15px;
+            background: #eef2ff;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .matching-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .match-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+            background: #f8fafc;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 600px) {
+            .match-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        .term-box {
+            font-weight: 600;
+            color: #334155;
+            font-size: 16px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            font-size: 14px;
+            color: var(--text-color);
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result-box {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .correct {
+            border-color: var(--success) !important;
+            background-color: #f0fdf4 !important;
+        }
+
+        .incorrect {
+            border-color: var(--error) !important;
+            background-color: #fef2f2 !important;
+        }
+        html {
+    zoom: 1.15; /* 1.15 = 115%. Қажет болса 1.2 деп өзгертіңіз */
+}
+.bg-stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #111425 0%, #05060a 100%);
+            z-index: -1;
+        }
+
+        .ornament-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-stars">
+        <div class="ornament-overlay"></div>
+    </div>
+
+<div class="container">
+    <div class="header">
+        <h1>Түсіндірмелі сөздікпен жұмыс</h1>
+        <p>👥 Жеке парақта жұптық тапсырма</p>
+    </div>
+
+    <div class="matching-grid" id="matchingGrid">
+        <!-- JavaScript арқылы динамикалық түрде араластырылып түседі -->
+    </div>
+
+    <div class="actions">
+        <button onclick="checkAnswers()">Нәтижені тексеру</button>
+    </div>
+
+    <div class="result-box" id="resultBox"></div>
+</div>
+
+<script>
+    // Түпнұсқа деректер
+    const data = [
+        { term: "Нәпсі", definition: "қалау, құмарлық" },
+        { term: "Ғибадат", definition: "құлшылық ету, сиыну" },
+        { term: "Аббыйыр", definition: "абройлы болу" },
+        { term: "Күнәкәр", definition: "күнә жасау" },
+        { term: "Ахирет", definition: "о дүниедегі істелетін іс, мәңгік өмір" },
+        { term: "Залал", definition: "зиян, қиянат келтіру" },
+        { term: "Рақым", definition: "жақсылық" },
+        { term: "Нысап", definition: "қанағатшылдық" }
+    ];
+
+    // Массив элементтерін араластыру функциясы (Fisher-Yates shuffle)
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    function initQuiz() {
+        const grid = document.getElementById('matchingGrid');
+        grid.innerHTML = '';
+
+        // Термин мен анықтамаларды бөлек алып, екеуін де араластырамыз
+        let terms = data.map(item => ({ term: item.term, originalDef: item.definition }));
+        let definitions = data.map(item => item.definition);
+
+        terms = shuffle(terms);
+        definitions = shuffle(definitions);
+
+        terms.forEach((item, index) => {
+            const row = document.createElement('div');
+            row.className = 'match-row';
+            row.dataset.originalTerm = item.term;
+
+            // Термин жағы
+            const termBox = document.createElement('div');
+            termBox.className = 'term-box';
+            termBox.innerHTML = `<strong>${index + 1}.</strong> ${item.term}`;
+
+            // Селект (ашылмалы тізім) жағы
+            const selectContainer = document.createElement('div');
+            const select = document.createElement('select');
+            select.dataset.term = item.term;
+            
+            // Басқы бос нұсқа
+            const defaultOption = document.createElement('option');
+            defaultOption.value = "";
+            defaultOption.text = "Мағынасын таңдаңыз...";
+            defaultOption.selected = true;
+            defaultOption.disabled = true;
+            select.appendChild(defaultOption);
+
+            // Араластырылған анықтамаларды қосу
+            definitions.forEach(def => {
+                const option = document.createElement('option');
+                option.value = def;
+                option.text = def;
+                select.appendChild(option);
+            });
+
+            selectContainer.appendChild(select);
+            row.appendChild(termBox);
+            row.appendChild(selectContainer);
+            grid.appendChild(row);
+        });
+    }
+
+    function checkAnswers() {
+        const rows = document.querySelectorAll('.match-row');
+        let correctCount = 0;
+
+        rows.forEach(row => {
+            const term = row.dataset.originalTerm;
+            const select = row.querySelector('select');
+            const selectedVal = select.value;
+
+            // Дұрыс мәнді табу
+            const correctItem = data.find(item => item.term === term);
+
+            if (selectedVal === correctItem.definition) {
+                select.classList.remove('incorrect');
+                select.classList.add('correct');
+                correctCount++;
+            } else {
+                select.classList.remove('correct');
+                select.classList.add('incorrect');
+            }
+        });
+
+        const resultBox = document.getElementById('resultBox');
+        resultBox.style.display = 'block';
+        
+        if (correctCount === data.length) {
+            resultBox.style.color = 'var(--success)';
+            resultBox.innerHTML = `🎉 Керемет! Барлық жауап дұрыс (${correctCount}/${data.length})`;
+        } else {
+            resultBox.style.color = 'var(--error)';
+            resultBox.innerHTML = `⚠️ Қателер бар. Дұрыс жауаптар саны: ${correctCount}/${data.length}. Қайта көріңіз!`;
+        }
+    }
+
+    // Бет ашылғанда тапсырманы генерациялау
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
