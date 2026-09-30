@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="kk" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ғылым соты — Абайдың Толық адам философиясы</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        kazakh: {
+                            blue: '#00A3E0',
+                            gold: '#D4AF37',
+                            darkblue: '#0B2545',
+                            sand: '#F4F1EA',
+                            terracotta: '#C85A32'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-serif-custom { font-family: 'Playfair Display', serif; }
+        .ornament-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.15) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+    </style>
+</head>
+<body class="h-full bg-kazakh-sand dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 ornament-bg flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-b border-kazakh-gold/30 sticky top-0 z-50 px-6 py-4 flex items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-kazakh-blue to-kazakh-gold flex items-center justify-center text-white shadow-md">
+                <i data-lucide="scale" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="font-serif-custom text-xl font-bold tracking-wide text-kazakh-darkblue dark:text-kazakh-gold">Ғылым Соты</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Абайдың «Толық адам» философиясы</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button id="themeToggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition text-slate-600 dark:text-slate-200">
+                <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-amber-400"></i>
+            </button>
+            <button onclick="resetAllData()" class="px-3 py-2 text-xs font-semibold rounded-xl bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 hover:bg-red-200 transition flex items-center space-x-1.5">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                <span>Бастапқыға қайтару</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 overflow-y-auto">
+
+        <!-- Left Navigation / Tabs -->
+        <div class="lg:col-span-3 space-y-3">
+            <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 space-y-2">
+                <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 px-3 mb-2">Сабақ кезеңдері</h2>
+                
+                <button onclick="switchTab('intro')" id="nav-intro" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-left bg-kazakh-blue text-white shadow-md">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                    <span>1. Кіріспе & Концепт</span>
+                </button>
+
+                <button onclick="switchTab('defense')" id="nav-defense" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-left text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                    <i data-lucide="timer" class="w-5 h-5"></i>
+                    <span>2. Топтық қорғау (1 мин)</span>
+                </button>
+
+                <button onclick="switchTab('judge')" id="nav-judge" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-left text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                    <i data-lucide="gavel" class="w-5 h-5"></i>
+                    <span>3. Ғылымның сұрағы</span>
+                </button>
+
+                <button onclick="switchTab('formula')" id="nav-formula" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-left text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                    <i data-lucide="calculator" class="w-5 h-5"></i>
+                    <span>4. Толық адам формулы</span>
+                </button>
+
+                <button onclick="switchTab('deepdive')" id="nav-deepdive" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-left text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                    <i data-lucide="help-circle" class="w-5 h-5"></i>
+                    <span>5. Тереңдетілген талдау</span>
+                </button>
+
+                <button onclick="switchTab('voting')" id="nav-voting" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-left text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+                    <i data-lucide="vote" class="w-5 h-5"></i>
+                    <span>6. Бағалау & Дауыс беру</span>
+                </button>
+            </div>
+
+            <!-- Quick Equation Widget -->
+            <div class="bg-gradient-to-br from-kazakh-darkblue to-slate-900 text-white rounded-2xl p-5 shadow-lg border border-kazakh-gold/40 relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 text-kazakh-gold/10">
+                    <i data-lucide="award" class="w-32 h-32"></i>
+                </div>
+                <h3 class="text-xs uppercase tracking-widest text-kazakh-gold font-semibold mb-2">Абай формуласы</h3>
+                <div class="text-sm font-bold tracking-wide space-y-1">
+                    <div class="text-blue-200">Қайрат + Ақыл + Жүрек</div>
+                    <div class="text-kazakh-gold text-lg">= ТОЛЫҚ АДАМ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Dynamic Panel -->
+        <div class="lg:col-span-9 space-y-6">
+
+            <!-- TAB 1: INTRO -->
+            <div id="tab-intro" class="tab-content space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-48 h-48 bg-kazakh-gold/10 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none"></div>
+                    <div class="max-w-2xl space-y-4">
+                        <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                            <span>Интерактивті сабақ моделі</span>
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-serif-custom font-bold text-slate-900 dark:text-white">Ғылым сотына қош келдіңіз!</h2>
+                        <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Бұл сабақта үш топ өз кейіпкерлерін — <strong>Қайратты</strong>, <strong>Ақылды</strong> және <strong>Жүректі</strong> қорғайды. Әр топқа 1 минут беріледі. 
+                        </p>
+                        <div class="pt-4 flex flex-wrap gap-3">
+                            <button onclick="switchTab('defense')" class="px-6 py-3 rounded-xl bg-kazakh-blue text-white font-medium hover:bg-blue-600 shadow-md transition flex items-center space-x-2">
+                                <span>Қорғау сайысын бастау</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300 flex items-center justify-center font-bold">1</div>
+                        <h3 class="font-bold text-slate-800 dark:text-white">Қайраттылар тобы</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">«Адамға ең керегі — Қайрат, себебі ...»</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-300 flex items-center justify-center font-bold">2</div>
+                        <h3 class="font-bold text-slate-800 dark:text-white">Ақылдылар тобы</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">«Адамға ең керегі — Ақыл, себебі...»</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-300 flex items-center justify-center font-bold">3</div>
+                        <h3 class="font-bold text-slate-800 dark:text-white">Жүректілер тобы</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">«Адамға ең керегі — Жүрек, себебі...»</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: DEFENSE TIMER -->
+            <div id="tab-defense" class="tab-content hidden space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-2xl font-serif-custom font-bold text-slate-900 dark:text-white">Топтардың қорғау сайысы</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Әр топ өз кейіпкерін дәлелдеу үшін 1 минут уақытқа ие.</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="setTeam('kairat')" id="btn-kairat" class="team-tab px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow">Қайрат</button>
+                            <button onclick="setTeam('akyl')" id="btn-akyl" class="team-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Ақыл</button>
+                            <button onclick="setTeam('zhurek')" id="btn-zhurek" class="team-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">Жүрек</button>
+                        </div>
+                    </div>
+
+                    <!-- Timer Display Box -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center space-y-6">
+                        <div id="teamTitleBadge" class="px-4 py-1.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 uppercase tracking-widest">
+                            Қайрат тобының қорғауы
+                        </div>
+                        
+                        <div id="timerDisplay" class="font-serif-custom text-6xl sm:text-7xl font-extrabold text-slate-900 dark:text-white tracking-wider">
+                            01:00
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="flex items-center space-x-3">
+                            <button onclick="startTimer()" id="startBtn" class="px-6 py-3 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition flex items-center space-x-2 shadow">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                <span>Бастау</span>
+                            </button>
+                            <button onclick="pauseTimer()" class="px-6 py-3 rounded-xl bg-amber-600 text-white font-medium hover:bg-amber-700 transition flex items-center space-x-2 shadow">
+                                <i data-lucide="pause" class="w-4 h-4"></i>
+                                <span>Үзіліс</span>
+                            </button>
+                            <button onclick="resetTimer()" class="px-6 py-3 rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-300 dark:hover:bg-slate-600 transition flex items-center space-x-2">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                <span>Қайтару</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Team Prompt Argument Helper -->
+                    <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/40 rounded-2xl p-5 text-sm text-amber-900 dark:text-amber-200 space-y-2">
+                        <div class="font-bold flex items-center space-x-2">
+                            <i data-lucide="lightbulb" class="w-4 h-4 text-amber-600"></i>
+                            <span id="argumentTitle">Қайрат тобының аргумент үлгісі:</span>
+                        </div>
+                        <p id="argumentText" class="text-xs leading-relaxed text-amber-800 dark:text-amber-300">
+                            «Адамға ең керегі — Қайрат, себебі қанша мықты ақыл немесе сезім болса да, ерік-жігер мен іске асырушы қажыр болмаса, ешбір ізгі ниет жүзеге аспайды.»
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: JUDGE PROBLEM PROMPT -->
+            <div id="tab-judge" class="tab-content hidden space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="p-3 rounded-2xl bg-kazakh-gold/20 text-kazakh-gold">
+                            <i data-lucide="gavel" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-serif-custom font-bold text-slate-900 dark:text-white">Ғылым сотының шешімі & Сұрағы</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Үш топтың қорғауынан кейінгі мұғалімнің (Ғылымның) түйінді сұрағы</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-blue-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-kazakh-gold/30 space-y-6">
+                        <span class="text-xs uppercase tracking-widest text-kazakh-gold font-semibold">Проблемалық сұрақ</span>
+                        <blockquote class="font-serif-custom text-xl sm:text-2xl italic leading-relaxed text-blue-100">
+                            «Егер үшеуің де адамға қажет болсаңдар, неліктен Абай: <br>
+                            <strong class="text-kazakh-gold not-italic">“бәрін де жүрекке билет”</strong> дейді?»
+                        </blockquote>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Оқушылар осы сұраққа жауап іздегенде сабақтың негізгі тақырыбы мен идеясы өздігінен ашылады. Жүректің басқалардан артықшылығы неде немесе жүрек барлығын қалай басқарады?
+                        </p>
+                    </div>
+
+                    <!-- Interactive Student Hypothesis Input -->
+                    <div class="space-y-3">
+                        <h3 class="text-sm font-bold text-slate-800 dark:text-white">Оқушылардың болжамдары мен жауаптары:</h3>
+                        <div class="flex gap-2">
+                            <input type="text" id="hypothesisInput" placeholder="Өз жауабыңызды жазыңыз (Мысалы: Жүрек – мейірім мен әділдіктің бағдары)..." class="flex-1 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-kazakh-blue">
+                            <button onclick="addHypothesis()" class="px-5 py-3 rounded-xl bg-kazakh-blue text-white font-medium hover:bg-blue-600 transition shadow">Қосу</button>
+                        </div>
+                        <div id="hypothesisList" class="space-y-2 pt-2">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: FORMULA REVEAL -->
+            <div id="tab-formula" class="tab-content hidden space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6 text-center">
+                    <h2 class="text-2xl font-serif-custom font-bold text-slate-900 dark:text-white">Сабақтың қорытынды формуласы</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Оқушылардың талдауынан кейін тақтада шығарылатын тұжырым</p>
+
+                    <div class="py-8 space-y-6 bg-slate-50 dark:bg-slate-900/50 rounded-3xl border border-slate-200 dark:border-slate-700">
+                        <div class="flex flex-wrap items-center justify-center gap-4 text-lg sm:text-2xl font-bold text-slate-700 dark:text-slate-200">
+                            <span class="px-4 py-2 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-xl shadow-sm">ҚАЙРАТ</span>
+                            <span>+</span>
+                            <span class="px-4 py-2 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 rounded-xl shadow-sm">АҚЫЛ</span>
+                            <span>+</span>
+                            <span class="px-4 py-2 bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 rounded-xl shadow-sm">ЖҮРЕК</span>
+                        </div>
+                        <div class="text-3xl sm:text-4xl font-serif-custom font-extrabold text-kazakh-gold tracking-wider">
+                            ↓ ТОЛЫҚ АДАМ ↓
+                        </div>
+                    </div>
+
+                    <div class="text-left bg-blue-50 dark:bg-blue-900/20 p-5 rounded-2xl border border-blue-200 dark:border-blue-800/40 space-y-2">
+                        <h4 class="font-bold text-blue-900 dark:text-blue-200 text-sm">Мұғалімнің түйінді сөзі:</h4>
+                        <p class="text-xs text-blue-800 dark:text-blue-300 leading-relaxed">
+                            Абайдың «Толық адам» ілімі осы үш қасиеттің тепе-теңдігіне негізделген. Қайратсыз мақсат орындалмайды, ақылсыз іс қате болады, ал жүрексіз (имансыз/мейірімсіз) білім мен қуат адамды қатыгездікке апарады. Сондықтан бәрін жүрекке (ар мен әділдікке) билеткен жөн.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: DEEP DIVE QUESTIONS -->
+            <div id="tab-deepdive" class="tab-content hidden space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                    <div>
+                        <h2 class="text-2xl font-serif-custom font-bold text-slate-900 dark:text-white">Тереңдетілген сынақ сұрақтары</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Абай идеясын терең түсіну үшін мына сұрақтарды талқылаңыз:</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Q1 -->
+                        <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h3 class="font-bold text-slate-800 dark:text-white text-sm flex items-center space-x-2">
+                                <i data-lucide="help-circle" class="w-4 h-4 text-kazakh-blue"></i>
+                                <span>1. Ақыл бар, бірақ жүрек жоқ болса не болады?</span>
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 pl-6 leading-relaxed">
+                                Жауап: Қулық, айлакерлік, немқұрайдылық және мейірімсіз ғылым пайда болады. Ақыл тек пайда көздеп, ар-ұятты ұмытуы мүмкін.
+                            </p>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h3 class="font-bold text-slate-800 dark:text-white text-sm flex items-center space-x-2">
+                                <i data-lucide="help-circle" class="w-4 h-4 text-kazakh-blue"></i>
+                                <span>2. Қайрат бар, бірақ ақыл жоқ болса ше?</span>
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 pl-6 leading-relaxed">
+                                Жауап: «Ақылсыз күш — қараңғылық». Ерінбей жұмыс істегенімен, бағыты қате болып, залал келтіреді (соқыр күш).
+                            </p>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 space-y-2">
+                            <h3 class="font-bold text-slate-800 dark:text-white text-sm flex items-center space-x-2">
+                                <i data-lucide="help-circle" class="w-4 h-4 text-kazakh-blue"></i>
+                                <span>3. Жүрек бар, бірақ қайрат жоқ болса ше?</span>
+                            </h3>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 pl-6 leading-relaxed">
+                                Жауап: Бос қиял мен өкініш туындайды. Жақсыны қалағанымен, оны іске асыруға жігері жетпейді (қолдан келмес арман).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: VOTING & EVALUATION -->
+            <div id="tab-voting" class="tab-content hidden space-y-6">
+                <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6">
+                    <div>
+                        <h2 class="text-2xl font-serif-custom font-bold text-slate-900 dark:text-white">Топтарды бағалау және дауыс беру</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Қай топ өзінің кейіпкерін ең жақсы қорғады?</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between space-y-4">
+                            <div>
+                                <h3 class="font-bold text-blue-600 dark:text-blue-400 text-base">Қайрат тобы</h3>
+                                <p id="voteCount-kairat" class="text-3xl font-extrabold text-slate-800 dark:text-white mt-2">0</p>
+                                <p class="text-xs text-slate-400">дауыс жиналды</p>
+                            </div>
+                            <button onclick="voteTeam('kairat')" class="w-full py-2.5 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition shadow">Дауыс беру</button>
+                        </div>
+
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between space-y-4">
+                            <div>
+                                <h3 class="font-bold text-amber-600 dark:text-amber-400 text-base">Ақыл тобы</h3>
+                                <p id="voteCount-akyl" class="text-3xl font-extrabold text-slate-800 dark:text-white mt-2">0</p>
+                                <p class="text-xs text-slate-400">дауыс жиналды</p>
+                            </div>
+                            <button onclick="voteTeam('akyl')" class="w-full py-2.5 rounded-xl bg-amber-600 text-white font-medium hover:bg-amber-700 transition shadow">Дауыс беру</button>
+                        </div>
+
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between space-y-4">
+                            <div>
+                                <h3 class="font-bold text-rose-600 dark:text-rose-400 text-base">Жүрек тобы</h3>
+                                <p id="voteCount-zhurek" class="text-3xl font-extrabold text-slate-800 dark:text-white mt-2">0</p>
+                                <p class="text-xs text-slate-400">дауыс жиналды</p>
+                            </div>
+                            <button onclick="voteTeam('zhurek')" class="w-full py-2.5 rounded-xl bg-rose-600 text-white font-medium hover:bg-rose-700 transition shadow">Дауыс беру</button>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex justify-end">
+                        <button onclick="exportReport()" class="px-6 py-3 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 transition flex items-center space-x-2 shadow">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>Есепті көшіру / Экспорттау</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('themeToggle');
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Navigation Tabs Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-left text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700";
+            });
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.className = "nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition text-left bg-kazakh-blue text-white shadow-md";
+            }
+            lucide.createIcons();
+        }
+
+        // Defense Timer Logic
+        let currentTeam = 'kairat';
+        let timeLeft = 60;
+        let timerInterval = null;
+        let isRunning = false;
+
+        const teamData = {
+            kairat: {
+                title: "Қайрат тобының қорғауы",
+                argumentTitle: "Қайрат тобының аргумент үлгісі:",
+                argumentText: "«Адамға ең керегі — Қайрат, себебі қанша мықты ақыл немесе сезім болса да, ерік-жігер мен іске асырушы қажыр болмаса, ешбір ізгі ниет жүзеге аспайды.»"
+            },
+            akyl: {
+                title: "Ақыл тобының қорғауы",
+                argumentTitle: "Ақыл тобының аргумент үлгісі:",
+                argumentText: "«Адамға ең керегі — Ақыл, себебі дұрыс пен бұрысты, жақсы мен жаманды ажырататын — білім мен зерде.»"
+            },
+            zhurek: {
+                title: "Жүрек тобының қорғауы",
+                argumentTitle: "Жүрек тобының аргумент үлгісі:",
+                argumentText: "«Адамға ең керегі — Жүрек, себебі адамгершілік, махаббат, мейірім мен иманның бәрі жүректен бастау алады.»"
+            }
+        };
+
+        function setTeam(team) {
+            pauseTimer();
+            currentTeam = team;
+            timeLeft = 60;
+            updateTimerDisplay();
+
+            // Update UI buttons
+            ['kairat', 'akyl', 'zhurek'].forEach(t => {
+                const btn = document.getElementById(`btn-${t}`);
+                if (t === team) {
+                    btn.className = "team-tab px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow";
+                } else {
+                    btn.className = "team-tab px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300";
+                }
+            });
+
+            document.getElementById('teamTitleBadge').innerText = teamData[team].title;
+            document.getElementById('argumentTitle').innerText = teamData[team].argumentTitle;
+            document.getElementById('argumentText').innerText = teamData[team].argumentText;
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const secs = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('timerDisplay').innerText = `${mins}:${secs}`;
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            if (timeLeft <= 0) timeLeft = 60;
+            isRunning = true;
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    pauseTimer();
+                    alert("Уақыт аяқталды!");
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = 60;
+            updateTimerDisplay();
+        }
+
+        // Student Hypotheses Management
+        let hypotheses = JSON.parse(localStorage.getItem('science_hypotheses')) || [
+            "Жүрек барлық ізгіліктің басы болғандықтан, ақыл мен қайратты соған бағындыру керек."
+        ];
+
+        function renderHypotheses() {
+            const listEl = document.getElementById('hypothesisList');
+            listEl.innerHTML = '';
+            if (hypotheses.length === 0) {
+                listEl.innerHTML = '<p class="text-xs text-slate-400 italic">Әзірге жауаптар жоқ...</p>';
+                return;
+            }
+            hypotheses.forEach((hyp, idx) => {
+                const div = document.createElement('div');
+                div.className = "p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 flex items-center justify-between";
+                div.innerHTML = `<span>${idx + 1}. ${hyp}</span><button onclick="removeHypothesis(${idx})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-4 h-4"></i></button>`;
+                listEl.appendChild(div);
+            });
+            lucide.createIcons();
+            localStorage.setItem('science_hypotheses', JSON.stringify(hypotheses));
+        }
+
+        function addHypothesis() {
+            const input = document.getElementById('hypothesisInput');
+            const val = input.value.trim();
+            if (!val) return;
+            hypotheses.push(val);
+            input.value = '';
+            renderHypotheses();
+        }
+
+        function removeHypothesis(index) {
+            hypotheses.splice(index, 1);
+            renderHypotheses();
+        }
+
+        // Voting System Logic
+        let votes = JSON.parse(localStorage.getItem('science_votes')) || { kairat: 0, akyl: 0, zhurek: 0 };
+
+        function voteTeam(team) {
+            votes[team]++;
+            localStorage.setItem('science_votes', JSON.stringify(votes));
+            updateVoteDisplay();
+        }
+
+        function updateVoteDisplay() {
+            document.getElementById('voteCount-kairat').innerText = votes.kairat;
+            document.getElementById('voteCount-akyl').innerText = votes.akyl;
+            document.getElementById('voteCount-zhurek').innerText = votes.zhurek;
+        }
+
+        function exportReport() {
+            const report = `--- ҒЫЛЫМ СОТЫ САБАҒЫНЫҢ ЕСЕПТІГІ ---\nҚайрат дауысы: ${votes.kairat}\nАқыл дауысы: ${votes.akyl}\nЖүрек дауысы: ${votes.zhurek}\n\nОқушылар жауаптары:\n${hypotheses.join('\n- ')}`;
+            const textArea = document.createElement('textarea');
+            textArea.value = report;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert("Есеп буферге көшірілді!");
+        }
+
+        function resetAllData() {
+            if (confirm("Барлық деректерді өшіріп, басынан бастауды қалайсыз ба?")) {
+                localStorage.clear();
+                votes = { kairat: 0, akyl: 0, zhurek: 0 };
+                hypotheses = [];
+                updateVoteDisplay();
+                renderHypotheses();
+                resetTimer();
+                switchTab('intro');
+            }
+        }
+
+        // Initial render on load
+        renderHypotheses();
+        updateVoteDisplay();
+    </script>
+
+</body>
+</html>
